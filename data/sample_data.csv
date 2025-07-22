@@ -1,0 +1,6 @@
+Name, Age, Email, Join Date, Sales
+Alice, 30, alice@example.com, 2023/01/10, 1500
+Bob, , bob@example.com, 2023-02-15, 2000
+Charlie, 25, , 15-03-2023, 1800
+Diana, 28, diana@example.com, 2023/04/05,
+Eve, 35, eve@example.com, 2023/03/12, 2200
