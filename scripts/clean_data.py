@@ -7,7 +7,7 @@ import os
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(base_dir, '..', 'data', 'sample_data.csv')
 cleaned_csv_path = os.path.join(base_dir, '..', 'outputs', 'cleaned_data.csv')
-plot_path = os.path.join(base_dir, '..', 'outputs', 'plot.png')
+plot_path = os.path.join(base_dir, '..', 'outputs', 'sales_chart.png')
 pdf_path = os.path.join(base_dir, '..', 'outputs', 'report.pdf')
 
 # Load CSV
@@ -38,15 +38,22 @@ pdf.add_page()
 pdf.set_font("Arial", 'B', 16)
 pdf.cell(0, 10, 'CSV Cleaning Report', ln=True)
 
-# Add summary
+# Add summary text with some spacing before the plot
 pdf.set_font("Arial", '', 12)
 summary_text = f"Original rows: {len(df)}\nCleaned rows: {len(df_clean)}\nColumns: {', '.join(df.columns)}"
 for line in summary_text.split('\n'):
     pdf.cell(0, 10, line, ln=True)
 
-# Add plot image
+pdf.ln(10)  # Add 10 units vertical space before plot
+
+print("Adding image from:", plot_path)
+print("Image exists:", os.path.exists(plot_path))
+
+# Add plot image if exists, centered and scaled
 if os.path.exists(plot_path):
-    pdf.image(plot_path, x=10, y=60, w=pdf.w - 20)
+    # Calculate width with margin
+    img_width = pdf.w - 20  # page width minus margins
+    pdf.image(plot_path, x=10, y=pdf.get_y(), w=img_width)
 
 # Save PDF
 pdf.output(pdf_path)
