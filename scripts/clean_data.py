@@ -7,8 +7,9 @@ import os
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(base_dir, '..', 'data', 'sample_data.csv')
 cleaned_csv_path = os.path.join(base_dir, '..', 'outputs', 'cleaned_data.csv')
-plot_path = os.path.join(base_dir, '..', 'outputs', 'sales_chart.png')
-pdf_path = os.path.join(base_dir, '..', 'outputs', 'report.pdf')
+age_chart_path = os.path.join(base_dir, '..', 'outputs', 'age_chart.png')
+sales_chart_path = os.path.join(base_dir, '..', 'outputs', 'sales_chart.png')
+report_path = os.path.join(base_dir, '..', 'outputs', 'report.pdf')
 
 # Load CSV
 df = pd.read_csv(data_path)
@@ -19,7 +20,7 @@ df_clean = df.dropna()
 # Save cleaned data
 df_clean.to_csv(cleaned_csv_path, index=False)
 
-# Generate a simple plot (e.g., Age distribution)
+# Create Age Distribution Chart
 if 'Age' in df_clean.columns:
     plt.figure(figsize=(6, 4))
     df_clean['Age'].astype(int).hist(bins=10)
@@ -27,7 +28,18 @@ if 'Age' in df_clean.columns:
     plt.xlabel('Age')
     plt.ylabel('Count')
     plt.tight_layout()
-    plt.savefig(plot_path)
+    plt.savefig(age_chart_path)
+    plt.close()
+
+# Create Sales Distribution Chart
+if 'Sales' in df_clean.columns:
+    plt.figure(figsize=(6, 4))
+    df_clean['Sales'].astype(float).hist(bins=10, color='orange')
+    plt.title('Sales Distribution')
+    plt.xlabel('Sales')
+    plt.ylabel('Count')
+    plt.tight_layout()
+    plt.savefig(sales_chart_path)
     plt.close()
 
 # Generate PDF report
@@ -38,24 +50,29 @@ pdf.add_page()
 pdf.set_font("Arial", 'B', 16)
 pdf.cell(0, 10, 'CSV Cleaning Report', ln=True)
 
-# Add summary text with some spacing before the plot
+# Summary text
 pdf.set_font("Arial", '', 12)
 summary_text = f"Original rows: {len(df)}\nCleaned rows: {len(df_clean)}\nColumns: {', '.join(df.columns)}"
 for line in summary_text.split('\n'):
     pdf.cell(0, 10, line, ln=True)
 
-pdf.ln(10)  # Add 10 units vertical space before plot
+pdf.ln(10)  # space before images
 
-print("Adding image from:", plot_path)
-print("Image exists:", os.path.exists(plot_path))
+# Add Age chart
+if os.path.exists(age_chart_path):
+    pdf.image(age_chart_path, x=10, y=pdf.get_y(), w=pdf.w - 20)
+else:
+    print("❌ Age chart not found!")
 
-# Add plot image if exists, centered and scaled
-if os.path.exists(plot_path):
-    # Calculate width with margin
-    img_width = pdf.w - 20  # page width minus margins
-    pdf.image(plot_path, x=10, y=pdf.get_y(), w=img_width)
+# New page for Sales chart
+pdf.add_page()
+
+if os.path.exists(sales_chart_path):
+    pdf.image(sales_chart_path, x=10, y=10, w=pdf.w - 20)
+else:
+    print("❌ Sales chart not found!")
 
 # Save PDF
-pdf.output(pdf_path)
+pdf.output(report_path)
 
-print("✅ Cleaning complete. Outputs saved in /outputs folder.")
+print("✅ Cleaning complete. Report with charts saved in /outputs folder.")

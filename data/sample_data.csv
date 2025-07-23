@@ -1,6 +1,21 @@
-Name, Age, Email, Join Date, Sales
-Alice, 30, alice@example.com, 2023/01/10, 1500
-Bob, , bob@example.com, 2023-02-15, 2000
-Charlie, 25, , 15-03-2023, 1800
-Diana, 28, diana@example.com, 2023/04/05,
-Eve, 35, eve@example.com, 2023/03/12, 2200
+Name,Age,Email,Join Date,Sales
+Alice,30,alice@example.com,2023/01/10,1500
+Bob,,bob@example.com,2023-02-15,2000
+Charlie,25,,15-03-2023,1800
+Diana,28,diana@example.com,2023/04/05,
+Eve,35,eve@example.com,2023/03/12,2200
+Frank,40,frank@example.com,2023.05.10,2500
+Grace,,grace@example,2023-06-01,2300
+Hank,29,hank@example.com,06/15/2023,2100
+Ivy,31,ivy@example.com,2023/07/20,1950
+Jack,27,jack_at_example.com,2023-08-12,1800
+Kate,33,kate@example.com,2023.09.01,2050
+Leo,26,leo@example.com,2023-09-15,1750
+Mia,24,mia@example.com,15/10/2023,1900
+Nina,38,nina@example,2023-11-05,2400
+Oscar,32,oscar@example.com,2023/12/01,2250
+Paul,,paul@example.com,2023-12-15,2100
+Quinn,30,quinn@example.com,12-20-2023,2150
+Rose,29,rose@example.com,2023/12/25,2200
+Sam,35,sam@example.com,2024-01-10,2350
+Tina,28,tina@example.com,01/15/2024,2050
